@@ -1,15 +1,11 @@
-# Software Debouncing
-In previously labs, we talked about how objects such as switches can cause some nasty effects since they are actually a mechanical system at heart. We talked about the simple hardware method of debouncing, but due to the many different design constraints, you may not be able to add or adjust hardware. Debouncing is also only one of many applications which would require the use of built in Timers to allow for other processes to take place.
+# Functionality
+This code toggles an LED, and does so without any button bouncing issues. This is done with the use of a Timer Peripheral.When the button is pressed, the PORT vector is serviced. In the service routine, a timer is started in up mode, the port interrupt flag is cleared, and the port interrupt enable is turned off. Then, the timer CCR0 interrupt will be flagged and serviced. In the service routine, the port interrupt is enabled, the flag is cleared again, and the timer is stopped and cleared. This software allows for a button press to be only registered as one interrupt. For the time it takes for the timer to get from zero, to CCR0, the button interrupt will not be able to be flagged.
 
-## Task
-You need to utilize the TIMER modules within the MSP430 processors to implement a debounced switch to control the state of an LED. You most likely will want to hook up your buttons on the development boards to an oscilloscope to see how much time it takes for the buttons to settle. The idea here is that your processor should be able to run other code, while relying on timers and interrupts to manage the debouncing in the background. You should not be using polling techniques for this assignment. Your code should also be able to detect 
+# Difficulties
+There were some problems with the debouncing of the button originally. When the port flag was not cleared a second time, in the timer ISR, the button would typically not debounce correctly. 
 
-### Hints
-You need to take a look at how the P1IE and P1IES registers work and how to control them within an interrupt routine. Remember that the debouncing is not going to be the main process you are going to run by the end of the lab.
+# Resources used
+The only resources used in this project was the lecture notes provided. The rest of the knowledge was gained through experimentation, and previous lab projects.
 
-## Extra Work
-### Low Power Modes
-Go into the datasheets or look online for information about the low power modes of your processors and using Energy Trace, see what the lowest power consumption you can achieve while still running your debouncing code. Take a note when your processor is not driving the LED (or unplug the header connecting the LED and check) but running the interrupt routine for your debouncing.
-
-### Double the fun
-Can you expand your code to debounce two switches? Do you have to use two Timer peripherals to do this?
+# Differences between boards
+The onyl differences between each of the boards were the ports for the buttons, and the timer peripheral used.
