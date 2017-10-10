@@ -1,15 +1,8 @@
-# Hardware PWM
-Now that you have done the software version of PWM, now it is time to start leveraging the other features of these Timer Modules.
+# Functionality
+This code functions by taking advantage of the built-in PWM modules found in each of the MSP430s. This was completed by setting a timer to OUTMOD_3, for set/reset. This created a situation in which the increased value of CCR1 created a more dim light a the pin configured to TA0.1, or whichever timer was used. A Port interrupt was then setup to change the value of CCR1 on the press of a button. A rollover check was added so that the value of CCR1 would revert back to zero if it became greater than the value of CCR0. This allowed the user to cycle through the different brightness settings of the LED.
 
-## Task
-You need to replicate the same behavior as in the software PWM, only using the Timer Modules ability to directly output to a GPIO Pin instead of managing them in software. 
+# Difficulties
+There weren't any difficulties with this section of the lab besides figuring out which OUTMOD should be used, and how to configure it for the brightness changes desired.
 
-### Hints 
-Read up on the P1SEL registers as well as look at the Timer modules ability to multiplex.
-
-## Extra Work
-### Using ACLK
-Some of these microprocessors have a built in ACLK which is extremely slow compared to your up to 25MHz available on some of them. What is the overall impact on the system when using this clock? Can you actually use your PWM code with a clock that slow?
-
-### Ultra Low Power
-Using a combination of ACLK, Low Power Modes, and any other means you may deem necessary, optimize this PWM code to run at 50% duty cycle with a LED on the MSP430FR5994. In particular, time how long your code can run on the fully charged super capacitor. You do not need to worry about the button control in this case, and you will probably want to disable all the GPIO that you are not using (nudge, nudge, hint, hint).
+# Resources used
+The resource explorer was used for the first few boards. The examples were copied and pasted initially, but they were later changed. The pins needed to be changed to correctly output to the LED on the launchpad. Additionally, the OUTMOD of each was changed to OUTMOD_3.
